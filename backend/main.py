@@ -2,7 +2,8 @@ from services.tutor import tutor
 from services.quiz import generate_quiz
 from services.performance import (
     save_quiz_result,
-    get_performance_summary
+    get_performance_summary,
+    recommend_difficulty
 )
 from services.study_plan import generate_study_plan
 def choose_language():
@@ -85,6 +86,17 @@ def quiz_mode(language):
     print("2. Medium")
     print("3. Hard")
 
+    recommended_difficulty = recommend_difficulty(topic)
+
+    print(
+        f"\nEduMentor recommendation: "
+        f"{recommended_difficulty}"
+    )
+
+    print(
+        "This recommendation is based on your "
+        "previous performance in this topic."
+    )
     difficulty_options = {
         "1": "Easy",
         "2": "Medium",

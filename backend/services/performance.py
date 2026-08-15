@@ -85,3 +85,31 @@ def get_performance_summary():
         "topics": topic_averages,
         "weakest_topic": weakest_topic
     }
+
+
+def recommend_difficulty(topic):
+    """Recommend quiz difficulty based on previous performance."""
+
+    data = load_performance()
+    quizzes = data.get("quizzes", [])
+
+    topic_scores = []
+
+    for quiz in quizzes:
+        if quiz["topic"].lower() == topic.lower():
+            topic_scores.append(quiz["percentage"])
+
+    # No previous attempts for this topic
+    if not topic_scores:
+        return "Easy"
+
+    average_score = sum(topic_scores) / len(topic_scores)
+
+    if average_score < 60:
+        return "Easy"
+
+    elif average_score < 80:
+        return "Medium"
+
+    else:
+        return "Hard"
