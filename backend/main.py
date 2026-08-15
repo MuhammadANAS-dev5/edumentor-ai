@@ -10,7 +10,7 @@ print("1. English")
 print("2. Urdu")
 print("3. Bilingual")
 
-language_choice = input("Enter your choice (1-3): ")
+language_choice = input("Enter your choice (1-3): ").strip()
 
 languages = {
     "1": "English",
@@ -18,11 +18,14 @@ languages = {
     "3": "Bilingual"
 }
 
-language = languages.get(language_choice, "English")
+if language_choice not in languages:
+    print("Invalid choice. Please select 1, 2, or 3.")
+else:
+    language = languages[language_choice]
 
-question = input("\nAsk your question: ")
+    question = input("\nAsk your question: ")
 
-answer = tutor(question, language)
+    answer = tutor(question, language)
 
-print("\nEduMentor:")
-print(answer)
+    print("\nEduMentor:")
+    print(answer)
