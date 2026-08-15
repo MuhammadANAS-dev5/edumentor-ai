@@ -116,7 +116,8 @@ def quiz_mode(language):
     quiz = generate_quiz(
         topic,
         difficulty,
-        number_of_questions
+        number_of_questions,
+        language
     )
 
     if "error" in quiz:

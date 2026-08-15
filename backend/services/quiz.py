@@ -3,7 +3,7 @@ import json
 from services.llm import generate_response
 
 
-def generate_quiz(topic, difficulty, number_of_questions):
+def generate_quiz(topic, difficulty, number_of_questions, language):
     """
     Generate a multiple-choice quiz using the LLM.
     """
@@ -22,9 +22,32 @@ Difficulty:
 Number of questions:
 {number_of_questions}
 
+Language preference:
+{language}
+
+Language rules:
+
+If the language is English:
+- Write the questions in English.
+- Write all options in English.
+- Write explanations in English.
+
+If the language is Urdu:
+- Write questions in Urdu script.
+- Write options in Urdu script.
+- Keep technical terms such as C++, Python, OOP,
+  algorithm, class, object, API, and AI in English
+  when appropriate.
+- Write explanations in Urdu script.
+
+If the language is Bilingual:
+- Write the main explanation in Urdu and English.
+- Use Urdu script for Urdu.
+- Keep important technical terminology in English.
+
 Return ONLY valid JSON.
 
-Use exactly this structure:
+The JSON must have this structure:
 
 {{
     "questions": [
@@ -37,7 +60,7 @@ Use exactly this structure:
                 "D": "Option D"
             }},
             "correct_answer": "A",
-            "explanation": "Short explanation of why the answer is correct."
+            "explanation": "Explanation"
         }}
     ]
 }}
