@@ -4,6 +4,7 @@ from services.performance import (
     save_quiz_result,
     get_performance_summary
 )
+from services.study_plan import generate_study_plan
 def choose_language():
     """Ask the student to select a response language."""
 
@@ -270,6 +271,43 @@ def performance_mode():
 
 
 
+def study_plan_mode(language):
+    """Generate a personalized study plan based on performance."""
+
+    performance = get_performance_summary()
+
+    print("\n================================")
+    print("       PERSONALIZED STUDY PLAN")
+    print("================================")
+
+    if performance["total_quizzes"] == 0:
+        print("\nNo quiz results found.")
+        print("Complete a quiz first so EduMentor can analyze your performance.")
+        return
+
+    weakest_topic = performance["weakest_topic"]
+
+    weakest_score = performance["topics"][weakest_topic]
+
+    print(f"\nWeakest Topic: {weakest_topic}")
+    print(f"Current Performance: {weakest_score:.1f}%")
+
+    print("\nGenerating your personalized study plan...")
+
+    plan = generate_study_plan(
+        weakest_topic,
+        weakest_score,
+        language
+    )
+
+    print("\n================================")
+    print("          YOUR STUDY PLAN")
+    print("================================\n")
+
+    print(plan)
+
+
+
 def show_menu():
     """Display the main application menu."""
 
@@ -313,7 +351,8 @@ def main():
             print("\nSummarization mode will be implemented soon.")
 
         elif choice == "5":
-            print("\nStudy Plan mode will be implemented soon.")
+            study_plan_mode(language)
+        
 
         elif choice == "6":
             performance_mode()
