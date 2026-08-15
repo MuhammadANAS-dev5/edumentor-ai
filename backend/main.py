@@ -1,11 +1,4 @@
-def tutor(question):
-    question = question.strip()
-
-    if not question:
-        return "Please enter a question."
-
-    return f"I received your question: {question}"
-
+from services.tutor import tutor
 
 print("================================")
 print("       EduMentor AI Tutor")
