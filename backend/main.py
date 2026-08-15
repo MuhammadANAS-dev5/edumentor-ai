@@ -1,6 +1,9 @@
 from services.tutor import tutor
 from services.quiz import generate_quiz
-
+from services.performance import (
+    save_quiz_result,
+    get_performance_summary
+)
 def choose_language():
     """Ask the student to select a response language."""
 
@@ -164,6 +167,13 @@ def quiz_mode(language):
 
     percentage = (score / len(questions)) * 100
 
+    save_quiz_result(
+    topic,
+    difficulty,
+    score,
+    len(questions)
+)
+
     print("\n================================")
     print("          QUIZ RESULTS")
     print("================================")
@@ -172,14 +182,91 @@ def quiz_mode(language):
     print(f"Percentage: {percentage:.1f}%")
 
     if percentage >= 80:
-        print("Excellent work!")
+        performance = "Excellent"
 
     elif percentage >= 60:
-        print("Good job! Keep practicing.")
+        performance = "Good"
 
     else:
-        print("Keep practicing. You can improve!")
+        performance = "Needs Improvement"
+
+    print(f"Performance: {performance}")
+
+    print("\n================================")
+    print("       STUDY RECOMMENDATION")
+    print("================================")
+
+    if percentage >= 80:
+        print(f"You have a strong understanding of {topic}.")
+        print("Try a harder quiz or move to the next topic.")
+
+    elif percentage >= 60:
+        print(f"You have a basic understanding of {topic}.")
+        print("Review the concepts you got wrong and practice again.")
+
+    else:
+        print(f"You need more practice with {topic}.")
+        print("Start with the fundamentals before attempting another quiz.")
     
+
+
+def performance_mode():
+    """Display the student's previous quiz performance."""
+
+    performance = get_performance_summary()
+
+    print("\n================================")
+    print("       MY PERFORMANCE")
+    print("================================")
+
+    if performance["total_quizzes"] == 0:
+        print("\nNo quiz results found.")
+        print("Complete a quiz first to see your performance.")
+        return
+
+    print(f"\nTotal quizzes: {performance['total_quizzes']}")
+    print(
+        f"Overall average: "
+        f"{performance['average_percentage']:.1f}%"
+    )
+
+    print("\nTopic Performance:")
+    print("--------------------------------")
+
+    for topic, average in performance["topics"].items():
+        print(f"{topic}: {average:.1f}%")
+
+    print("\n--------------------------------")
+    print(
+        f"Weakest topic: "
+        f"{performance['weakest_topic']}"
+    )
+
+    print("\nRecommendation:")
+
+    weakest_score = performance["topics"][
+        performance["weakest_topic"]
+    ]
+
+    if weakest_score < 60:
+        print(
+            f"You should focus more on "
+            f"{performance['weakest_topic']}."
+        )
+        print("Review the fundamentals and practice more quizzes.")
+
+    elif weakest_score < 80:
+        print(
+            f"You have room to improve in "
+            f"{performance['weakest_topic']}."
+        )
+        print("Try another practice quiz on this topic.")
+
+    else:
+        print(
+            "Your performance is strong across "
+            "your recorded topics."
+        )
 
 
 
@@ -194,7 +281,8 @@ def show_menu():
     print("3. Generate Quiz")
     print("4. Summarize Text")
     print("5. Study Plan")
-    print("6. Exit")
+    print("6. My Performance")
+    print("7. Exit")
 
 
 def main():
@@ -210,7 +298,7 @@ def main():
     while True:
         show_menu()
 
-        choice = input("\nChoose an option (1-6): ").strip()
+        choice = input("\nChoose an option (1-7): ").strip()
 
         if choice == "1":
             ask_question(language)
@@ -228,11 +316,14 @@ def main():
             print("\nStudy Plan mode will be implemented soon.")
 
         elif choice == "6":
+            performance_mode()
+
+        elif choice == "7":
             print("\nThank you for using EduMentor AI!")
             break
 
         else:
-            print("\nInvalid choice. Please select 1-6.")
+            print("\nInvalid choice. Please select 1-7.")
 
 
 if __name__ == "__main__":

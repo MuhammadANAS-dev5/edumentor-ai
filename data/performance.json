@@ -1,0 +1,18 @@
+{
+    "quizzes": [
+        {
+            "topic": "computer",
+            "difficulty": "Medium",
+            "score": 1,
+            "total_questions": 2,
+            "percentage": 50.0
+        },
+        {
+            "topic": "math",
+            "difficulty": "Hard",
+            "score": 0,
+            "total_questions": 3,
+            "percentage": 0.0
+        }
+    ]
+}
