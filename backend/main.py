@@ -34,14 +34,17 @@ def choose_language():
 
 
 def ask_question(language):
-    """Run an interactive AI tutoring conversation."""
+    """Run an interactive AI tutoring conversation with memory."""
 
     print("\n================================")
     print("          AI TUTOR")
     print("================================")
 
     print("\nYou can ask EduMentor anything about your studies.")
-    print("Type 'exit' when you want to return to the main menu.")
+    print("EduMentor will remember the current conversation.")
+    print("Type 'exit' to return to the main menu.")
+
+    conversation_history = []
 
     while True:
 
@@ -58,12 +61,29 @@ def ask_question(language):
         print("\nEduMentor is thinking...\n")
 
         try:
-            response = tutor(question, language)
+            response = tutor(
+                question,
+                language,
+                conversation_history
+            )
 
             print("================================")
             print("          EDU MENTOR")
             print("================================")
+
             print(response)
+
+            # Store the student's message.
+            conversation_history.append({
+                "role": "Student",
+                "content": question
+            })
+
+            # Store the AI response.
+            conversation_history.append({
+                "role": "EduMentor",
+                "content": response
+            })
 
         except Exception as error:
             print("\nUnable to generate a response.")
@@ -72,6 +92,7 @@ def ask_question(language):
         print("\n--------------------------------")
         print("You can ask another question.")
         print("Type 'exit' to return to the main menu.")
+
 
 def explain_topic(language):
     """Ask the AI to explain a specific topic."""
