@@ -44,7 +44,7 @@ def save_quiz_result(topic, difficulty, score, total_questions):
     return result
 
 def get_performance_summary():
-    """Calculate performance statistics from previous quizzes."""
+    """Calculate detailed performance statistics."""
 
     data = load_performance()
     quizzes = data.get("quizzes", [])
@@ -54,7 +54,8 @@ def get_performance_summary():
             "total_quizzes": 0,
             "average_percentage": 0,
             "topics": {},
-            "weakest_topic": None
+            "weakest_topic": None,
+            "strongest_topic": None
         }
 
     topic_scores = {}
@@ -77,13 +78,22 @@ def get_performance_summary():
         quiz["percentage"] for quiz in quizzes
     ) / len(quizzes)
 
-    weakest_topic = min(topic_averages, key=lambda topic: topic_averages[topic])
+    weakest_topic = min(
+        topic_averages,
+        key=lambda topic: topic_averages[topic]
+    )
+
+    strongest_topic = max(
+        topic_averages,
+        key=lambda topic: topic_averages[topic]
+    )
 
     return {
         "total_quizzes": len(quizzes),
         "average_percentage": round(average_percentage, 1),
         "topics": topic_averages,
-        "weakest_topic": weakest_topic
+        "weakest_topic": weakest_topic,
+        "strongest_topic": strongest_topic
     }
 
 

@@ -225,61 +225,91 @@ def quiz_mode(language):
 
 
 def performance_mode():
-    """Display the student's previous quiz performance."""
+    """Display a detailed student performance dashboard."""
 
     performance = get_performance_summary()
 
-    print("\n================================")
-    print("       MY PERFORMANCE")
-    print("================================")
+    print("\n========================================")
+    print("         EDU MENTOR - PROGRESS")
+    print("========================================")
 
     if performance["total_quizzes"] == 0:
         print("\nNo quiz results found.")
-        print("Complete a quiz first to see your performance.")
+        print("Complete a quiz first to see your progress.")
         return
 
-    print(f"\nTotal quizzes: {performance['total_quizzes']}")
+    print(f"\nTotal Quizzes: {performance['total_quizzes']}")
+
     print(
-        f"Overall average: "
+        f"Overall Average: "
         f"{performance['average_percentage']:.1f}%"
     )
 
-    print("\nTopic Performance:")
-    print("--------------------------------")
-
-    for topic, average in performance["topics"].items():
-        print(f"{topic}: {average:.1f}%")
-
-    print("\n--------------------------------")
     print(
-        f"Weakest topic: "
+        f"Strongest Topic: "
+        f"{performance['strongest_topic']}"
+    )
+
+    print(
+        f"Weakest Topic: "
         f"{performance['weakest_topic']}"
     )
 
-    print("\nRecommendation:")
+    print("\n========================================")
+    print("        TOPIC-WISE PERFORMANCE")
+    print("========================================")
 
-    weakest_score = performance["topics"][
-        performance["weakest_topic"]
-    ]
+    for topic, average in performance["topics"].items():
+
+        if average >= 80:
+            level = "Strong"
+
+        elif average >= 60:
+            level = "Average"
+
+        else:
+            level = "Needs Practice"
+
+        print(
+            f"{topic}: "
+            f"{average:.1f}% "
+            f"({level})"
+        )
+
+    weakest_topic = performance["weakest_topic"]
+    weakest_score = performance["topics"][weakest_topic]
+
+    recommended_difficulty = recommend_difficulty(
+        weakest_topic
+    )
+
+    print("\n========================================")
+    print("          LEARNING RECOMMENDATION")
+    print("========================================")
+
+    print(f"Focus Area: {weakest_topic}")
+    print(f"Current Score: {weakest_score:.1f}%")
+    print(
+        f"Recommended Quiz Difficulty: "
+        f"{recommended_difficulty}"
+    )
 
     if weakest_score < 60:
         print(
-            f"You should focus more on "
-            f"{performance['weakest_topic']}."
+            "\nRecommendation: Review the fundamentals "
+            "and practice more questions."
         )
-        print("Review the fundamentals and practice more quizzes.")
 
     elif weakest_score < 80:
         print(
-            f"You have room to improve in "
-            f"{performance['weakest_topic']}."
+            "\nRecommendation: Continue practicing "
+            "and attempt another quiz."
         )
-        print("Try another practice quiz on this topic.")
 
     else:
         print(
-            "Your performance is strong across "
-            "your recorded topics."
+            "\nRecommendation: Your performance is strong. "
+            "Try a harder challenge."
         )
 
 

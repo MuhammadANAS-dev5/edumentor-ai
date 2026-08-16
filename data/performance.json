@@ -27,6 +27,13 @@
             "score": 1,
             "total_questions": 2,
             "percentage": 50.0
+        },
+        {
+            "topic": "world Bank",
+            "difficulty": "Easy",
+            "score": 1,
+            "total_questions": 2,
+            "percentage": 50.0
         }
     ]
 }
