@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMentor AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            EduMentor <span>AI</span>
+        </div>
+
+        <div class="language-selector">
+            <select id="language">
+                <option value="English">English</option>
+                <option value="Urdu">اردو</option>
+                <option value="Bilingual">Bilingual</option>
+            </select>
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="hero">
+
+            <h1>
+                Learn Smarter with
+                <span>EduMentor AI</span>
+            </h1>
+
+            <p>
+                Your personalized AI tutor for
+                English, Urdu, and bilingual learning.
+            </p>
+
+        </section>
+
+
+        <section class="features">
+
+            <button class="feature-card" onclick="showTutor()">
+                <h2>AI Tutor</h2>
+                <p>
+                    Ask questions and learn through
+                    an interactive AI conversation.
+                </p>
+            </button>
+
+
+            <button class="feature-card" onclick="showQuiz()">
+                <h2>AI Quiz</h2>
+                <p>
+                    Test your knowledge with
+                    AI-generated quizzes.
+                </p>
+            </button>
+
+
+            <button class="feature-card" onclick="showPerformance()">
+                <h2>Performance</h2>
+                <p>
+                    Track your learning progress
+                    and identify weak topics.
+                </p>
+            </button>
+
+
+            <button class="feature-card" onclick="showStudyPlan()">
+                <h2>Study Plan</h2>
+                <p>
+                    Get a personalized learning
+                    plan based on your performance.
+                </p>
+            </button>
+
+        </section>
+
+
+        <section id="workspace" class="workspace">
+
+            <h2>AI Tutor</h2>
+
+            <div id="chat-box" class="chat-box">
+
+                <div class="message ai-message">
+                    Hello! I'm EduMentor AI.
+                    What would you like to learn today?
+                </div>
+
+            </div>
+
+
+            <div class="input-area">
+
+                <input type="text" id="question" placeholder="Ask your question...">
+
+                <button onclick="askQuestion()">
+                    Ask
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            EduMentor AI — AI-powered personalized education
+        </p>
+
+    </footer>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
