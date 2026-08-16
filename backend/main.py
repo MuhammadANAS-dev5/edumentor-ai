@@ -6,6 +6,9 @@ from services.performance import (
     recommend_difficulty
 )
 from services.study_plan import generate_study_plan
+from services.remediation import generate_remediation
+
+
 def choose_language():
     """Ask the student to select a response language."""
 
@@ -174,10 +177,38 @@ def quiz_mode(language):
         if answer == correct_answer:
             print("Correct!")
             score += 1
-        else:
-            print(f"Incorrect. Correct answer: {correct_answer}")
 
-        print(f"Explanation: {question_data['explanation']}")
+            print(
+        f"Explanation: "
+        f"{question_data['explanation']}"
+    )
+
+        else:
+            print(
+        f"Incorrect. Correct answer: "
+        f"{correct_answer}"
+    )
+
+            print(
+        f"Explanation: "
+        f"{question_data['explanation']}"
+    )
+
+            print("\nGenerating personalized feedback...")
+
+        remediation = generate_remediation(
+            question_data["question"],
+            answer,
+            correct_answer,
+            question_data["explanation"],
+            language
+    )
+
+        print("\n================================")
+        print("       AI LEARNING FEEDBACK")
+        print("================================")
+
+        print(remediation)
 
     percentage = (score / len(questions)) * 100
 
