@@ -78,6 +78,9 @@ Rules:
     response = generate_response(prompt)
 
     try:
+        if response is None:
+            raise json.JSONDecodeError("Empty response", "", 0)
+
         quiz = json.loads(response)
         return quiz
 
