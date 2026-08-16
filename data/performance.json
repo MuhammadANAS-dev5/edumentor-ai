@@ -8,13 +8,6 @@
             "percentage": 50.0
         },
         {
-            "topic": "math",
-            "difficulty": "Hard",
-            "score": 0,
-            "total_questions": 3,
-            "percentage": 0.0
-        },
-        {
             "topic": "sentanc translation",
             "difficulty": "Easy",
             "score": 1,
@@ -29,18 +22,11 @@
             "percentage": 50.0
         },
         {
-            "topic": "world Bank",
+            "topic": "python",
             "difficulty": "Easy",
-            "score": 1,
-            "total_questions": 2,
-            "percentage": 50.0
-        },
-        {
-            "topic": "c",
-            "difficulty": "Easy",
-            "score": 1,
-            "total_questions": 2,
-            "percentage": 50.0
+            "score": 3,
+            "total_questions": 3,
+            "percentage": 100.0
         }
     ]
 }
