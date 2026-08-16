@@ -34,21 +34,44 @@ def choose_language():
 
 
 def ask_question(language):
-    """Allow the student to ask an educational question."""
+    """Run an interactive AI tutoring conversation."""
 
-    question = input("\nEnter your question: ").strip()
+    print("\n================================")
+    print("          AI TUTOR")
+    print("================================")
 
-    if not question:
-        print("Please enter a question.")
-        return
+    print("\nYou can ask EduMentor anything about your studies.")
+    print("Type 'exit' when you want to return to the main menu.")
 
-    print("\nEduMentor is thinking...\n")
+    while True:
 
-    answer = tutor(question, language)
+        question = input("\nYour question: ").strip()
 
-    print("EduMentor:")
-    print(answer)
+        if not question:
+            print("Please enter a question.")
+            continue
 
+        if question.lower() == "exit":
+            print("\nReturning to the main menu...")
+            break
+
+        print("\nEduMentor is thinking...\n")
+
+        try:
+            response = tutor(question, language)
+
+            print("================================")
+            print("          EDU MENTOR")
+            print("================================")
+            print(response)
+
+        except Exception as error:
+            print("\nUnable to generate a response.")
+            print(f"Error: {error}")
+
+        print("\n--------------------------------")
+        print("You can ask another question.")
+        print("Type 'exit' to return to the main menu.")
 
 def explain_topic(language):
     """Ask the AI to explain a specific topic."""
