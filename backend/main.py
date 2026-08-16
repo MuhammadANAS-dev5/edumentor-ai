@@ -391,39 +391,26 @@ def performance_mode():
 
 
 def study_plan_mode(language):
-    """Generate a personalized study plan based on performance."""
+    """Display a personalized AI-generated study plan."""
 
-    performance = get_performance_summary()
+    print("\n========================================")
+    print("          AI STUDY PLAN")
+    print("========================================")
 
-    print("\n================================")
-    print("       PERSONALIZED STUDY PLAN")
-    print("================================")
+    print("\nAnalyzing your learning profile...")
 
-    if performance["total_quizzes"] == 0:
-        print("\nNo quiz results found.")
-        print("Complete a quiz first so EduMentor can analyze your performance.")
+    result = generate_study_plan(language)
+
+    if not result["success"]:
+        print("\nUnable to generate a study plan.")
+        print(result["message"])
         return
 
-    weakest_topic = performance["weakest_topic"]
+    print("\n========================================")
+    print("       YOUR PERSONALIZED PLAN")
+    print("========================================")
 
-    weakest_score = performance["topics"][weakest_topic]
-
-    print(f"\nWeakest Topic: {weakest_topic}")
-    print(f"Current Performance: {weakest_score:.1f}%")
-
-    print("\nGenerating your personalized study plan...")
-
-    plan = generate_study_plan(
-        weakest_topic,
-        weakest_score,
-        language
-    )
-
-    print("\n================================")
-    print("          YOUR STUDY PLAN")
-    print("================================\n")
-
-    print(plan)
+    print(result["plan"])
 
 
 

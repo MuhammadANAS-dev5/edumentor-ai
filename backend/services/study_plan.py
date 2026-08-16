@@ -1,37 +1,118 @@
 from services.llm import generate_response
+from services.learning_profile import build_learning_profile
 
 
-def generate_study_plan(topic, score, language):
-    """Generate a personalized study plan using AI."""
+def generate_study_plan(language):
+    """Generate a personalized study plan from the student's performance."""
 
-    prompt = f"""
-You are EduMentor AI, a personalized educational assistant.
+    profile = build_learning_profile()
 
-Create a 7-day study plan for a university student.
+    if not profile["has_data"]:
+        return {
+            "success": False,
+            "message": (
+                "Complete at least one quiz before generating "
+                "a personalized study plan."
+            )
+        }
 
-Weak topic:
-{topic}
+    weakest_topic = profile["weakest_topic"]
+    strongest_topic = profile["strongest_topic"]
+    average_percentage = profile["average_percentage"]
+    weakest_score = profile["weakest_score"]
 
-Current quiz performance:
-{score:.1f}%
+    if language == "English":
 
-Preferred language:
-{language}
-
-The student needs to improve in this topic.
-
-Create a practical and realistic 7-day study plan.
-
-For each day include:
-- Main topic
-- What to learn
-- One practical activity
-
-The plan should gradually increase in difficulty.
-
-End with a short motivational message.
-
-Keep the explanation clear and student-friendly.
+        language_instruction = """
+Write the study plan completely in English.
+Use clear and simple language suitable for a university student.
 """
 
-    return generate_response(prompt)
+    elif language == "Urdu":
+
+        language_instruction = """
+Write the study plan primarily in Urdu script.
+Use natural Pakistani Urdu.
+
+Keep technical terms such as C++, Python, OOP,
+algorithms, programming, database, API, and AI in English.
+
+Do not use Roman Urdu.
+"""
+
+    else:
+
+        language_instruction = """
+Write the study plan in a natural Urdu-English bilingual style.
+
+Use Urdu script for explanations and English for
+important technical terminology.
+
+Do not use Roman Urdu.
+"""
+
+    prompt = f"""
+You are EduMentor AI, a personalized university tutor.
+
+{language_instruction}
+
+Create a practical study plan for the student.
+
+Student performance:
+
+Overall average:
+{average_percentage}%
+
+Weakest topic:
+{weakest_topic}
+
+Weakest topic score:
+{weakest_score}%
+
+Strongest topic:
+{strongest_topic}
+
+Recommended difficulty:
+{profile["recommended_difficulty"]}
+
+Learning status:
+{profile["learning_status"]}
+
+Create a short 7-day study plan.
+
+The plan must contain:
+
+Day 1:
+Day 2:
+Day 3:
+Day 4:
+Day 5:
+Day 6:
+Day 7:
+
+For each day include:
+- Topic
+- Learning activity
+- Practice activity
+
+Give extra attention to the weakest topic.
+
+Keep the plan realistic for a university student.
+
+Do not invent personal information about the student.
+"""
+
+    try:
+        response = generate_response(prompt)
+
+        return {
+            "success": True,
+            "plan": response
+        }
+
+    except Exception as error:
+
+        return {
+            "success": False,
+            "message": f"Could not generate study plan: {error}"
+        }
