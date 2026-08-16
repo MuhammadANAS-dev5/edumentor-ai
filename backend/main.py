@@ -7,6 +7,7 @@ from services.performance import (
 )
 from services.study_plan import generate_study_plan
 from services.remediation import generate_remediation
+from services.learning_profile import build_learning_profile
 
 
 def choose_language():
@@ -382,6 +383,74 @@ def study_plan_mode(language):
 
 
 
+def learning_profile_mode():
+    """Display the student's personalized learning profile."""
+
+    profile = build_learning_profile()
+
+    print("\n========================================")
+    print("          AI LEARNING PROFILE")
+    print("========================================")
+
+    if not profile["has_data"]:
+        print("\nNo learning history available yet.")
+        print("Complete a quiz to build your profile.")
+        return
+
+    print(f"\nLearning Status: {profile['learning_status']}")
+
+    print(
+        f"Total Quizzes: "
+        f"{profile['total_quizzes']}"
+    )
+
+    print(
+        f"Overall Average: "
+        f"{profile['average_percentage']:.1f}%"
+    )
+
+    print(
+        f"Strongest Topic: "
+        f"{profile['strongest_topic']}"
+    )
+
+    print(
+        f"Weakest Topic: "
+        f"{profile['weakest_topic']}"
+    )
+
+    print(
+        f"Weakest Topic Score: "
+        f"{profile['weakest_score']:.1f}%"
+    )
+
+    print(
+        f"Recommended Difficulty: "
+        f"{profile['recommended_difficulty']}"
+    )
+
+    print("\n========================================")
+    print("             NEXT ACTION")
+    print("========================================")
+
+    print(
+        f"Focus your next study session on "
+        f"{profile['weakest_topic']}."
+    )
+    
+    article = (
+    "an"
+    if profile["recommended_difficulty"] == "Easy"
+    else "a"
+)    
+
+    print(
+        f"Start with {article} "
+        f"{profile['recommended_difficulty']} quiz "
+        f"and review the topic afterward."
+    ) 
+
+
 def show_menu():
     """Display the main application menu."""
 
@@ -394,7 +463,8 @@ def show_menu():
     print("4. Summarize Text")
     print("5. Study Plan")
     print("6. My Performance")
-    print("7. Exit")
+    print("7. Learning Profile")
+    print("8. Exit")
 
 
 def main():
@@ -410,7 +480,7 @@ def main():
     while True:
         show_menu()
 
-        choice = input("\nChoose an option (1-7): ").strip()
+        choice = input("\nChoose an option (1-8): ").strip()
 
         if choice == "1":
             ask_question(language)
@@ -432,11 +502,14 @@ def main():
             performance_mode()
 
         elif choice == "7":
+            learning_profile_mode()
+
+        elif choice == "8":
             print("\nThank you for using EduMentor AI!")
             break
 
         else:
-            print("\nInvalid choice. Please select 1-7.")
+            print("\nInvalid choice. Please select 1-8.")
 
 
 if __name__ == "__main__":
