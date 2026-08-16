@@ -43,7 +43,7 @@ Do NOT use Roman Urdu.
 
     conversation_text = ""
 
-    for message in conversation_history[-10]:
+    for message in conversation_history[-10:]:
         conversation_text += (
             f"{message['role']}: "
             f"{message['content']}\n"
